@@ -6,11 +6,9 @@
     <title>YouTube Thumbnail Downloader - Get HD Thumbnails for Any Video | TubeNinja</title>
     <meta name="description" content="Download, edit, and batch download YouTube thumbnails in 4K, Full HD. Live previews, drag & drop, and one-click copy. No registration required.">
     <meta name="keywords" content="youtube thumbnail downloader, download youtube thumbnails, hd youtube thumbnails, free thumbnail downloader">
-    
-    <!-- Canonical URL -->
+
     <link rel="canonical" href="https://tubeninja.com/" />
-    
-    <!-- Open Graph / Twitter Cards -->
+
     <meta property="og:title" content="YouTube Thumbnail Downloader - TubeNinja">
     <meta property="og:description" content="Download HD YouTube thumbnails for free in seconds.">
     <meta property="og:type" content="website">
@@ -19,11 +17,10 @@
     <meta name="twitter:card" content="summary_large_image">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-    
-    <!-- Schema Markup for Rich Snippets -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -39,7 +36,7 @@
         }
     }
     </script>
-    
+
     <style>
         :root {
             --primary: #ff0000;
@@ -49,6 +46,10 @@
             --border: #e0e0e0;
             --bg: #ffffff;
             --card-bg: #f9f9f9;
+            --success: #34a853;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --info: #2196f3;
         }
 
         [data-theme="dark"] {
@@ -59,8 +60,12 @@
             --border: #444;
             --bg: #121212;
             --card-bg: #1e1e1e;
+            --success: #2d8e47;
+            --warning: #ffa726;
+            --danger: #e53935;
+            --info: #42a5f5;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.5;
@@ -72,15 +77,16 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            margin: 0;
         }
-        
+
         header {
             text-align: center;
             margin: 25px 0 20px;
             position: relative;
             flex-shrink: 0;
         }
-        
+
         h1 {
             color: var(--primary);
             font-size: clamp(1.8rem, 6vw, 2.5rem);
@@ -89,6 +95,11 @@
             font-weight: 700;
         }
         
+        h1 a {
+            color: inherit;
+            text-decoration: none;
+        }
+
         .tagline {
             color: var(--text);
             opacity: 0.8;
@@ -96,7 +107,7 @@
             margin: 0 auto;
             max-width: 90%;
         }
-        
+
         .input-container {
             max-width: 600px;
             margin: 0 auto 20px;
@@ -105,8 +116,7 @@
             box-sizing: border-box;
             flex-shrink: 0;
         }
-        
-        /* Drag & Drop Zone */
+
         .drop-zone {
             border: 2px dashed var(--border);
             border-radius: 8px;
@@ -138,7 +148,7 @@
             color: var(--text);
             box-sizing: border-box;
         }
-        
+
         #submit-btn {
             width: 100%;
             padding: 12px;
@@ -151,12 +161,11 @@
             cursor: pointer;
             transition: opacity 0.2s;
         }
-        
+
         #submit-btn:hover {
             opacity: 0.9;
         }
 
-        /* Batch Mode */
         .batch-toggle {
             text-align: center;
             margin: 10px 0;
@@ -242,8 +251,7 @@
             opacity: 0.8;
             text-align: center;
         }
-        
-        /* Live Preview */
+
         #live-preview {
             text-align: center;
             margin: 20px 0;
@@ -255,10 +263,10 @@
             border: 1px solid var(--border);
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        
+
         #error {
-            color: #d32f2f;
-            background: #ffebee;
+            color: var(--danger);
+            background: rgba(244, 67, 54, 0.1);
             padding: 10px;
             border-radius: 4px;
             margin: 10px 15px;
@@ -266,14 +274,16 @@
             display: none;
             font-size: clamp(13px, 3.5vw, 15px);
         }
-        
+
         .loading {
             text-align: center;
             margin: 20px 0;
             display: none;
             flex-shrink: 0;
+            color: var(--text);
+            opacity: 0.8;
         }
-        
+
         .loading-spinner {
             border: 3px solid rgba(0,0,0,0.1);
             border-radius: 50%;
@@ -283,12 +293,12 @@
             animation: spin 1s linear infinite;
             margin: 0 auto 10px;
         }
-        
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
+
         .thumbnails {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -298,20 +308,21 @@
             box-sizing: border-box;
             flex-grow: 1;
         }
-        
+
         .thumbnail-item {
             border: 1px solid var(--border);
             border-radius: 8px;
             overflow: hidden;
             background: var(--card-bg);
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
             max-width: 100%;
         }
 
         .thumbnail-item:hover {
             transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        
+
         .thumbnail-img-container {
             aspect-ratio: 16/9;
             background: var(--light);
@@ -320,31 +331,31 @@
             justify-content: center;
             position: relative;
         }
-        
+
         .thumbnail-img {
             width: 100%;
             height: auto;
             display: block;
             max-width: 100%;
         }
-        
+
         .thumbnail-info {
             padding: 10px;
         }
-        
+
         .thumbnail-title {
             font-size: clamp(13px, 3.5vw, 15px);
             margin-bottom: 8px;
             font-weight: 500;
             word-break: break-word;
         }
-        
+
         .btn-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
         }
-        
+
         .download-btn, .copy-btn, .edit-btn {
             padding: 8px;
             font-size: clamp(12px, 3.5vw, 14px);
@@ -359,26 +370,27 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 5px;
         }
-        
+
         .download-btn {
             background: var(--secondary);
         }
-        
+
         .copy-btn {
-            background: #34a853;
+            background: var(--success);
             position: relative;
             overflow: hidden;
         }
 
         .edit-btn {
-            background: #ff9800;
+            background: var(--warning);
             grid-column: span 2;
             margin-top: 5px;
         }
 
         .copy-btn.copied {
-            background: #2d8e47;
+            background: var(--success);
         }
 
         .copy-btn::after {
@@ -409,8 +421,7 @@
                 opacity: 0;
             }
         }
-        
-        /* How-to Section */
+
         .how-to-use {
             max-width: 600px;
             margin: 20px auto;
@@ -419,36 +430,35 @@
             border-radius: 8px;
             border: 1px solid var(--border);
         }
-        
+
         .how-to-use h2 {
             color: var(--primary);
             font-size: clamp(1.2rem, 5vw, 1.5rem);
             margin-bottom: 10px;
         }
-        
+
         .how-to-use ol {
             padding-left: 20px;
         }
-        
+
         .how-to-use li {
             margin-bottom: 8px;
             font-size: clamp(13px, 3.5vw, 15px);
         }
-        
-        /* Popular Videos Section */
+
         .popular-videos {
             max-width: 600px;
             margin: 20px auto;
             padding: 15px;
             text-align: center;
         }
-        
+
         .popular-videos h3 {
             color: var(--text);
             font-size: clamp(1rem, 4vw, 1.2rem);
             margin-bottom: 10px;
         }
-        
+
         .popular-videos button {
             background: var(--secondary);
             color: white;
@@ -460,12 +470,11 @@
             font-size: clamp(12px, 3.5vw, 14px);
             transition: opacity 0.2s;
         }
-        
+
         .popular-videos button:hover {
             opacity: 0.9;
         }
-        
-        /* Ad Container */
+
         .ad-container {
             max-width: 600px;
             margin: 20px auto;
@@ -475,15 +484,15 @@
             border-radius: 8px;
             border: 1px solid var(--border);
         }
-        
+
         .ad-container p {
             font-size: clamp(12px, 3.5vw, 14px);
             color: var(--text);
             opacity: 0.7;
             margin-bottom: 5px;
         }
-        
-        /* Thumbnail Editor Modal */
+
+        /* Editor Modal - Improved Styles */
         .editor-modal {
             display: none;
             position: fixed;
@@ -500,46 +509,161 @@
             background: var(--bg);
             padding: 20px;
             border-radius: 8px;
-            max-width: 90%;
-            max-height: 90%;
+            max-width: 95%;
+            max-height: 95%;
             overflow: auto;
-            width: 800px;
+            width: 900px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .editor-header h3 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+        .editor-canvas-container {
+            position: relative;
+            margin: 0 auto;
+            max-width: 100%;
+            overflow: auto;
+            border: 1px solid var(--border);
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AkEEjIZJ5P5LAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAJklEQVQ4y2NgGAWjYBSMglEwCkbBKBgFgwowMDEx/YdiM6LZAw8YAQB0zQ0t/2qX1AAAAABJRU5ErkJggg==');
+            background-repeat: repeat;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         #editor-canvas {
-            max-width: 100%;
-            border: 1px solid var(--border);
             display: block;
-            margin: 0 auto;
+            max-width: 100%;
+            max-height: 70vh;
+            cursor: default;
         }
         .editor-tools {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
             margin: 15px 0;
-            flex-wrap: wrap;
             justify-content: center;
+            padding: 10px;
+            background: var(--card-bg);
+            border-radius: 6px;
+            border: 1px solid var(--border);
         }
-        .editor-tools button {
+        .editor-tools button, .editor-tools select, .editor-tools input {
             padding: 8px 12px;
-            background: var(--secondary);
-            color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
+            transition: all 0.2s;
+        }
+        .editor-tools button {
+            background: var(--secondary);
+            color: white;
+            min-width: 100px;
         }
         .editor-tools button:hover {
             opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .editor-tools button:active {
+            transform: translateY(0);
+        }
+        .editor-tools select, .editor-tools input {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .text-toolbar {
+            display: none;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+            justify-content: center;
+            padding: 10px;
+            background: var(--card-bg);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+        .text-toolbar.active {
+            display: flex;
         }
         #close-editor {
-            background: #f44336;
+            background: var(--danger);
         }
         #add-text-btn {
-            background: #4caf50;
+            background: var(--success);
         }
         #download-edited {
             background: var(--primary);
         }
-        
+        #save-text-btn {
+            background: var(--info);
+        }
+        #cancel-text-btn {
+            background: var(--danger);
+        }
+        .crop-overlay {
+            position: absolute;
+            border: 2px dashed rgba(255,255,255,0.8);
+            background: rgba(0,0,0,0.3);
+            pointer-events: none;
+            display: none;
+        }
+        .crop-control {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border: 1px solid #333;
+            z-index: 10;
+            pointer-events: auto;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .crop-control.nw { top: -6px; left: -6px; cursor: nw-resize; }
+        .crop-control.ne { top: -6px; right: -6px; cursor: ne-resize; }
+        .crop-control.sw { bottom: -6px; left: -6px; cursor: sw-resize; }
+        .crop-control.se { bottom: -6px; right: -6px; cursor: se-resize; }
+        .crop-control.n { top: -6px; left: calc(50% - 6px); cursor: n-resize; width: 24px; border-radius: 3px; }
+        .crop-control.s { bottom: -6px; left: calc(50% - 6px); cursor: s-resize; width: 24px; border-radius: 3px; }
+        .crop-control.e { right: -6px; top: calc(50% - 6px); cursor: e-resize; height: 24px; border-radius: 3px; }
+        .crop-control.w { left: -6px; top: calc(50% - 6px); cursor: w-resize; height: 24px; border-radius: 3px; }
+
+        /* Text editing preview */
+        .text-preview {
+            position: absolute;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            max-width: 80%;
+            word-wrap: break-word;
+            text-align: center;
+            padding: 5px;
+            border: 1px dashed rgba(255,255,255,0.5);
+            background: rgba(0,0,0,0.3);
+            display: none;
+        }
+
+        /* Crop info display */
+        .crop-info {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            pointer-events: none;
+            display: none;
+        }
+
         footer {
             text-align: center;
             margin-top: auto;
@@ -586,7 +710,7 @@
             justify-content: center;
             transition: all 0.3s ease;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            z-index: 1000;
+            z-index: 1001;
         }
 
         .theme-toggle:hover {
@@ -639,17 +763,40 @@
         .back-btn:hover {
             opacity: 0.9;
         }
-        
+
         @media (max-width: 768px) {
             .editor-container {
                 width: 95%;
+                padding: 10px;
             }
             .editor-tools {
                 flex-direction: column;
+                align-items: stretch;
             }
-            .editor-tools button {
+            .editor-tools button, .editor-tools select, .editor-tools input {
                 width: 100%;
+                box-sizing: border-box;
             }
+            .text-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .text-toolbar select, .text-toolbar input {
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .crop-control {
+                width: 14px;
+                height: 14px;
+            }
+            .crop-control.nw { top: -7px; left: -7px; }
+            .crop-control.ne { top: -7px; right: -7px; }
+            .crop-control.sw { bottom: -7px; left: -7px; }
+            .crop-control.se { bottom: -7px; right: -7px; }
+            .crop-control.n { top: -7px; left: calc(50% - 12px); width: 24px; }
+            .crop-control.s { bottom: -7px; left: calc(50% - 12px); width: 24px; }
+            .crop-control.e { right: -7px; top: calc(50% - 12px); height: 24px; }
+            .crop-control.w { left: -7px; top: calc(50% - 12px); height: 24px; }
         }
 
         @media (max-width: 480px) {
@@ -657,7 +804,7 @@
                 grid-template-columns: 1fr;
                 gap: 12px;
             }
-            
+
             .theme-toggle {
                 width: 36px;
                 height: 36px;
@@ -665,23 +812,23 @@
                 top: 15px;
                 right: 15px;
             }
-            
+
             header {
                 margin: 10px 0 15px;
             }
-            
+
             .input-container {
                 margin-bottom: 15px;
             }
-            
+
             .thumbnail-item {
                 border-radius: 6px;
             }
-            
+
             .btn-group {
                 gap: 6px;
             }
-            
+
             #batch-container {
                 padding: 10px;
             }
@@ -693,11 +840,11 @@
                 height: 34px;
                 font-size: 0.9rem;
             }
-            
+
             #youtube-url, #submit-btn {
                 padding: 10px 12px;
             }
-            
+
             .footer-links {
                 gap: 8px;
             }
@@ -706,33 +853,30 @@
 </head>
 <body>
     <header>
-        <h1>TubeNinja</h1>
+        <h1><a href="/" aria-label="TubeNinja Home">TubeNinja</a></h1>
         <p class="tagline"><span>Download, edit, and batch download YouTube thumbnails in HD and 4K quality.</span>
-            <span>This application let you download thumbnails of all quality.</span>
-            <span>Just paste the URL of the thumbnail video in the below input and click Get Thumbnail Image</span></p>
+            <span>This application lets you download thumbnails of all qualities.</span>
+            <span>Just paste the YouTube URL below and click Get Thumbnails!</span></p>
         <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
     </header>
-    
+
     <div class="input-container">
-        <!-- Drag & Drop Zone -->
         <div class="drop-zone" id="drop-zone">
             <p>📌 Paste YouTube URL or drag & drop links here</p>
         </div>
-        <input type="text" id="youtube-url" placeholder="Paste YouTube URL here..." autofocus>
+        <input type="text" id="youtube-url" placeholder="Paste YouTube URL here..." autofocus aria-label="YouTube URL Input">
         <button id="submit-btn">Get Thumbnails</button>
-        
-        <!-- Batch Mode Toggle -->
+
         <div class="batch-toggle">
             <button id="toggle-batch-mode">
                 <span>🚀</span> Enable Batch Mode (Multiple URLs)
             </button>
         </div>
-        
-        <!-- Batch Input -->
+
         <div id="batch-container">
-            <textarea id="batch-urls" placeholder="Paste multiple YouTube URLs, one per line&#10;Example:&#10;https://youtube.com/watch?v=dQw4w9WgXcQ&#10;https://youtube.com/watch?v=9bZkp7q19f0"></textarea>
+            <textarea id="batch-urls" placeholder="Paste multiple YouTube URLs, one per line&#10;Example:&#10;https://www.youtube.com/watch?v=dQw4w9WgXcQ&#10;https://youtu.be/JGwWNGJdvx8" aria-label="Batch YouTube URLs Input"></textarea>
             <button id="process-batch">Process All Thumbnails</button>
-            <div class="batch-info">Paste one YouTube URL per line. All thumbnails will be downloaded automatically.</div>
+            <div class="batch-info">Paste one YouTube URL per line. Thumbnails will be displayed below.</div>
             <div class="batch-progress">
                 <div class="progress-bar">
                     <div class="progress-fill"></div>
@@ -742,117 +886,144 @@
         </div>
     </div>
 
-    <!-- Live Preview Section -->
     <div id="live-preview">
         <h3>Live Preview</h3>
         <img id="preview-img" src="" alt="Live thumbnail preview">
     </div>
-    
-    <!-- How-to Section -->
+
     <div class="how-to-use">
         <h2>How to Download YouTube Thumbnails</h2>
         <ol>
-            <li>Paste the YouTube video URL above or drag & drop a link</li>
-            <li>See a live preview instantly</li>
-            <li>Click "Get Thumbnails" to view all available resolutions</li>
-            <li>Download, copy, or edit any thumbnail</li>
-            <li>Use Batch Mode for multiple videos (click 🚀 Enable Batch Mode)</li>
+            <li>Paste the YouTube video URL above or drag & drop a link.</li>
+            <li>See a live preview instantly (if available).</li>
+            <li>Click "Get Thumbnails" to view all available resolutions.</li>
+            <li>Download, copy the URL, or edit any thumbnail.</li>
+            <li>Use Batch Mode for multiple videos (click 🚀 Enable Batch Mode).</li>
         </ol>
     </div>
-    
-    <!-- Popular Videos Section -->
+
     <div class="popular-videos">
         <h3>Try Popular Videos:</h3>
         <button data-video-id="dQw4w9WgXcQ">Never Gonna Give You Up</button>
         <button data-video-id="9bZkp7q19f0">Gangnam Style</button>
         <button data-video-id="JGwWNGJdvx8">Shape of You</button>
     </div>
-    
-    <!-- Ad Container -->
+
     <div class="ad-container">
         <p>Advertisement</p>
-        <!-- Ad code would go here -->
-        <div id="ad-slot"></div>
+        <div id="ad-slot">[ Ad Placeholder ]</div>
     </div>
-    
-    <div id="error"></div>
-    <div class="loading">
+
+    <div id="error" role="alert"></div>
+    <div class="loading" aria-live="polite">
         <div class="loading-spinner"></div>
-        <p>Loading thumbnails...</p>
+        <p>Fetching thumbnails...</p>
     </div>
-    
-    <div id="results" class="thumbnails"></div>
-    
-    <!-- Thumbnail Editor Modal -->
-    <div class="editor-modal" id="editor-modal">
+
+    <div id="results" class="thumbnails">
+        </div>
+
+    <div class="editor-modal" id="editor-modal" role="dialog" aria-modal="true" aria-labelledby="editor-title">
         <div class="editor-container">
-            <h3>Edit Thumbnail</h3>
-            <canvas id="editor-canvas"></canvas>
+            <div class="editor-header">
+                <h3 id="editor-title">Edit Thumbnail</h3>
+                <button id="close-editor" aria-label="Close Editor">&times; Close</button>
+            </div>
+            <div class="editor-canvas-container">
+                <canvas id="editor-canvas" aria-label="Thumbnail Editing Canvas"></canvas>
+                <div class="crop-overlay" id="crop-overlay" aria-hidden="true"></div>
+                <div class="crop-info" id="crop-info"></div>
+                <div class="text-preview" id="text-preview"></div>
+            </div>
             <div class="editor-tools">
-                <button id="crop-btn">Crop</button>
-                <button id="add-text-btn">Add Text</button>
-                <button id="download-edited">Download</button>
-                <button id="close-editor">Close</button>
+                <button id="crop-btn">✂️ Crop</button>
+                <button id="add-text-btn">✏️ Add Text</button>
+                <label for="font-family" class="visually-hidden">Font Family</label>
+                <select id="font-family" aria-label="Font Family">
+                    <option value="Arial">Arial</option>
+                    <option value="Verdana">Verdana</option>
+                    <option value="Helvetica">Helvetica</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Courier New">Courier New</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Impact">Impact</option>
+                    <option value="Comic Sans MS">Comic Sans</option>
+                    <option value="Palatino">Palatino</option>
+                </select>
+                <label for="text-color" class="visually-hidden">Text Color</label>
+                <input type="color" id="text-color" value="#ffffff" aria-label="Text Color Picker">
+                <button id="download-edited">💾 Download Edited</button>
+            </div>
+            <div class="text-toolbar" id="text-toolbar">
+                <label for="text-input" class="visually-hidden">Text Input</label>
+                <input type="text" id="text-input" placeholder="Enter your text here" aria-label="Text to add">
+                <label for="font-size" class="visually-hidden">Font Size</label>
+                <select id="font-size" aria-label="Font Size">
+                    <option value="16">Small (16px)</option>
+                    <option value="24" selected>Medium (24px)</option>
+                    <option value="32">Large (32px)</option>
+                    <option value="48">X-Large (48px)</option>
+                    <option value="64">XX-Large (64px)</option>
+                </select>
+                 <label for="text-align" class="visually-hidden">Text Alignment</label>
+                <select id="text-align" aria-label="Text Alignment">
+                    <option value="left">Left</option>
+                    <option value="center" selected>Center</option>
+                    <option value="right">Right</option>
+                </select>
+                <button id="save-text-btn">✔ Apply Text</button>
+                <button id="cancel-text-btn">✖ Cancel Text</button>
             </div>
         </div>
     </div>
-    
-    <!-- Legal Pages Content (hidden by default) -->
-    <div id="privacy-policy" class="legal-content">
+
+    <div id="privacy-policy" class="legal-content" tabindex="-1">
         <h2>Privacy Policy</h2>
-        <p>Last updated: January 2023</p>
+        <p>Last updated: April 2025</p>
         <h3>Information We Collect</h3>
-        <p>We do not collect or store any personal information. All processing happens in your browser.</p>
+        <p>We do not collect or store any personal information when you use TubeNinja. The YouTube URLs you enter are used solely to fetch thumbnail images directly from YouTube's servers. This processing happens locally in your browser or is proxied minimally if necessary, without retaining logs of your activity.</p>
+        <h3>Cookies and Tracking</h3>
+        <p>TubeNinja does not use cookies for tracking user behavior. We may use local storage solely for saving your preferences, such as the theme (light/dark mode).</p>
         <h3>Third-Party Services</h3>
-        <p>We don't use any third-party tracking or analytics services.</p>
+        <p>Thumbnails are fetched from YouTube (Google) servers (e.g., `i.ytimg.com`, `googleusercontent.com`). Your browser directly interacts with these services. We may display advertisements through third-party networks; their privacy policies apply to ad interactions.</p>
         <h3>Changes to This Policy</h3>
-        <p>We may update our Privacy Policy from time to time.</p>
+        <p>We may update our Privacy Policy. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
         <button class="back-btn">Back to TubeNinja</button>
     </div>
-    
-    <div id="terms-of-service" class="legal-content">
+
+    <div id="terms-of-service" class="legal-content" tabindex="-1">
         <h2>Terms of Service</h2>
-        <p>Last updated: January 2023</p>
+        <p>Last updated: April 2025</p>
         <h3>Use of Service</h3>
-        <p>This service is provided free of charge for personal, non-commercial use.</p>
+        <p>TubeNinja is provided free of charge for personal, non-commercial use. It allows you to find and download publicly available YouTube video thumbnails.</p>
         <h3>Prohibited Uses</h3>
-        <p>You may not use this service to violate YouTube's Terms of Service.</p>
+        <p>You agree not to use this service for any purpose that is unlawful or prohibited by these terms. You may not use this service to infringe on copyrights or violate YouTube's Terms of Service. Downloading thumbnails does not grant you ownership or rights to reuse the image, which remains the copyright of the video creator or YouTube.</p>
         <h3>Disclaimer</h3>
-        <p>This service is provided "as is" without warranties of any kind.</p>
+        <p>TubeNinja is provided "as is" without warranties of any kind. We do not guarantee the availability or accuracy of thumbnails. The service relies on publicly accessible URLs provided by YouTube, which may change without notice.</p>
         <button class="back-btn">Back to TubeNinja</button>
     </div>
-    
-    <div id="copyright-info" class="legal-content">
+
+    <div id="copyright-info" class="legal-content" tabindex="-1">
         <h2>Copyright Information</h2>
-        <p>Last updated: January 2023</p>
-        <h3>Copyright Notice</h3>
-        <p>All thumbnails are copyright of their respective owners.</p>
-        <h3>Fair Use</h3>
-        <p>This tool is intended for fair use of YouTube's public thumbnail images.</p>
+        <p>Last updated: April 2025</p>
+        <h3>Thumbnail Copyright</h3>
+        <p>All YouTube video thumbnails displayed and downloadable through TubeNinja are the property of their respective copyright holders (usually the video creator or YouTube/Google). TubeNinja does not claim ownership of these images.</p>
+        <h3>Permitted Use</h3>
+        <p>This tool is intended to facilitate access to publicly available thumbnail images for purposes such as previewing, referencing, or personal archiving, often falling under fair use principles depending on your specific use case. However, reusing thumbnails in your own projects, especially commercially, may require permission from the copyright holder.</p>
         <h3>DMCA</h3>
-        <p>If you believe any content infringes your copyright, please contact YouTube directly.</p>
+        <p>TubeNinja acts as a search tool and does not host any copyrighted material. If you believe a specific thumbnail infringes your copyright, please contact YouTube directly to have the source content addressed.</p>
         <button class="back-btn">Back to TubeNinja</button>
     </div>
-    
+
     <footer>
-        <p>TubeNinja &copy; <span id="year"></span> - Free online tool</p>
+        <p>TubeNinja &copy; <span id="year"></span> - Free online YouTube thumbnail tool</p>
         <div class="footer-links">
             <a href="#" data-legal="privacy-policy">Privacy Policy</a>
             <a href="#" data-legal="terms-of-service">Terms of Service</a>
             <a href="#" data-legal="copyright-info">Copyright Information</a>
         </div>
     </footer>
-    
-    <!-- Google Analytics (Optional) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'GA_MEASUREMENT_ID');
-    </script>
-    
-    <!-- Main Script -->
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Set current year
@@ -886,13 +1057,47 @@
             const downloadEditedBtn = document.getElementById('download-edited');
             const addTextBtn = document.getElementById('add-text-btn');
             const cropBtn = document.getElementById('crop-btn');
+            const textToolbar = document.getElementById('text-toolbar');
+            const textInput = document.getElementById('text-input');
+            const fontSizeSelect = document.getElementById('font-size');
+            const fontFamilySelect = document.getElementById('font-family');
+            const textAlignSelect = document.getElementById('text-align');
+            const textColorInput = document.getElementById('text-color');
+            const saveTextBtn = document.getElementById('save-text-btn');
+            const cancelTextBtn = document.getElementById('cancel-text-btn');
+            const cropOverlay = document.getElementById('crop-overlay');
+            const cropInfo = document.getElementById('crop-info');
+            const textPreview = document.getElementById('text-preview');
+            const editorCanvasContainer = document.querySelector('.editor-canvas-container');
+
+            // State Variables
+            let currentEditingImg = null;
+            let isCropping = false;
+            let isAddingText = false;
+            let isMovingText = false;
+            let cropRect = { x: 0, y: 0, width: 0, height: 0 };
+            let draggingCrop = false;
+            let resizingCrop = false;
+            let resizeHandle = null;
+            let cropStartX, cropStartY;
+            let cropControls = [];
+            let activeTextElement = null;
+            let textElements = [];
+            let currentTextPosition = { x: 0, y: 0 };
+
+            // --- Initialization ---
 
             // Theme Toggle
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 themeToggle.textContent = '🌞';
+            } else {
+                 document.documentElement.setAttribute('data-theme', 'light');
+                 themeToggle.textContent = '🌓';
             }
+
+            // --- Event Listeners ---
 
             themeToggle.addEventListener('click', function() {
                 const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -911,152 +1116,110 @@
             legalLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const target = this.getAttribute('data-legal');
-                    document.querySelector('.input-container').style.display = 'none';
-                    document.querySelector('.loading').style.display = 'none';
-                    resultsElement.style.display = 'none';
-                    errorElement.style.display = 'none';
-                    livePreview.style.display = 'none';
-                    document.querySelector('.how-to-use').style.display = 'none';
-                    document.querySelector('.popular-videos').style.display = 'none';
-                    document.querySelector('.ad-container').style.display = 'none';
-                    batchContainer.style.display = 'none';
-                    legalContents.forEach(content => {
-                        content.style.display = content.id === target ? 'block' : 'none';
-                    });
+                    const targetId = this.getAttribute('data-legal');
+                    showLegalContent(targetId);
                 });
             });
 
-            // Back Buttons
             backBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    legalContents.forEach(content => {
-                        content.style.display = 'none';
-                    });
-                    document.querySelector('.input-container').style.display = 'block';
-                    resultsElement.style.display = 'grid';
-                    livePreview.style.display = 'block';
-                    document.querySelector('.how-to-use').style.display = 'block';
-                    document.querySelector('.popular-videos').style.display = 'block';
-                    document.querySelector('.ad-container').style.display = 'block';
-                });
+                btn.addEventListener('click', showMainContent);
             });
 
-            // Popular Video Buttons
             popularVideoBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
                     const videoId = this.getAttribute('data-video-id');
-                    youtubeUrlInput.value = `https://youtube.com/watch?v=${videoId}`;
+                    youtubeUrlInput.value = `https://www.youtube.com/watch?v=${videoId}`;
                     updateLivePreview(videoId);
                     getThumbnails();
                 });
             });
 
-            // Live Preview on Input
+            // Live Preview on Input/Paste
             let previewTimeout;
-            youtubeUrlInput.addEventListener('input', function() {
-                clearTimeout(previewTimeout);
-                previewTimeout = setTimeout(() => {
-                    const videoId = extractVideoId(this.value);
-                    if (videoId) {
-                        updateLivePreview(videoId);
-                    }
-                }, 500);
+            youtubeUrlInput.addEventListener('input', handleUrlInput);
+            youtubeUrlInput.addEventListener('paste', (e) => {
+                setTimeout(() => handleUrlInput(e), 0);
             });
 
-            function updateLivePreview(videoId) {
-                livePreview.style.display = 'block';
-                previewImg.src = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+            function handleUrlInput() {
+                 clearTimeout(previewTimeout);
+                 previewTimeout = setTimeout(() => {
+                    const videoId = extractVideoId(youtubeUrlInput.value);
+                    if (videoId) {
+                        updateLivePreview(videoId);
+                    } else {
+                         livePreview.style.display = 'none';
+                    }
+                 }, 400);
             }
 
-            // Drag & Drop
+             // Drag & Drop
             dropZone.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 dropZone.classList.add('active');
             });
-
-            dropZone.addEventListener('dragleave', () => {
-                dropZone.classList.remove('active');
-            });
-
+            dropZone.addEventListener('dragleave', () => dropZone.classList.remove('active'));
             dropZone.addEventListener('drop', (e) => {
                 e.preventDefault();
                 dropZone.classList.remove('active');
-                const text = e.dataTransfer.getData('text');
+                let text = '';
+                if (e.dataTransfer.items) {
+                     for (let i = 0; i < e.dataTransfer.items.length; i++) {
+                         if (e.dataTransfer.items[i].kind === 'string' && e.dataTransfer.items[i].type.match('^text/uri-list') || e.dataTransfer.items[i].type.match('^text/plain')) {
+                             e.dataTransfer.items[i].getAsString((s) => {
+                                 youtubeUrlInput.value = s;
+                                 handleUrlInput();
+                                 getThumbnails();
+                             });
+                             return;
+                         }
+                     }
+                } else {
+                    text = e.dataTransfer.getData('text/plain') || e.dataTransfer.getData('text/uri-list');
+                }
+
                 if (text) {
                     youtubeUrlInput.value = text;
-                    const videoId = extractVideoId(text);
-                    if (videoId) {
-                        updateLivePreview(videoId);
-                    }
+                    handleUrlInput();
+                    getThumbnails();
                 }
             });
-
-            dropZone.addEventListener('click', () => {
-                youtubeUrlInput.focus();
-            });
+            dropZone.addEventListener('click', () => youtubeUrlInput.focus());
 
             // Batch Mode Toggle
             toggleBatchBtn.addEventListener('click', () => {
                 const isBatchMode = batchContainer.style.display === 'block';
                 batchContainer.style.display = isBatchMode ? 'none' : 'block';
-                youtubeUrlInput.style.display = isBatchMode ? 'block' : 'none';
+                document.getElementById('youtube-url').style.display = isBatchMode ? 'block' : 'none';
+                document.getElementById('submit-btn').style.display = isBatchMode ? 'block' : 'none';
                 livePreview.style.display = isBatchMode ? 'block' : 'none';
-                toggleBatchBtn.innerHTML = isBatchMode ? 
-                    '<span>🚀</span> Enable Batch Mode (Multiple URLs)' : 
+
+                toggleBatchBtn.innerHTML = isBatchMode ?
+                    '<span>🚀</span> Enable Batch Mode (Multiple URLs)' :
                     '<span>🔙</span> Single URL Mode';
+                resultsElement.innerHTML = '';
+                errorElement.style.display = 'none';
             });
 
             // Process Batch URLs
-            processBatchBtn.addEventListener('click', async () => {
-                const urls = batchUrls.value.split('\n').filter(url => url.trim());
-                if (urls.length === 0) {
-                    showError('Please enter at least one valid URL');
-                    return;
+            processBatchBtn.addEventListener('click', () => processBatch());
+            batchUrls.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    processBatch();
                 }
-
-                resultsElement.innerHTML = '';
-                loadingElement.style.display = 'block';
-                batchProgress.style.display = 'block';
-                progressFill.style.width = '0%';
-                progressText.textContent = `Processing 0 of ${urls.length}`;
-
-                // Process each URL sequentially with progress
-                for (let i = 0; i < urls.length; i++) {
-                    const url = urls[i];
-                    youtubeUrlInput.value = url;
-                    
-                    // Update progress
-                    const progress = Math.round(((i + 1) / urls.length) * 100);
-                    progressFill.style.width = `${progress}%`;
-                    progressText.textContent = `Processing ${i + 1} of ${urls.length}`;
-                    
-                    try {
-                        await getThumbnails();
-                    } catch (error) {
-                        console.error(`Error processing URL: ${url}`, error);
-                    }
-                }
-
-                loadingElement.style.display = 'none';
-                batchProgress.style.display = 'none';
             });
 
-            // Submit Button
-            submitBtn.addEventListener('click', function() {
-                getThumbnails();
-            });
-            
-            // Enter Key Support
+            // Submit Button (Single URL)
+            submitBtn.addEventListener('click', getThumbnails);
             youtubeUrlInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
+                    e.preventDefault();
                     getThumbnails();
                 }
             });
 
-            // Thumbnail Editor
-            let currentEditingImg = null;
-            
+            // Editor Event Listeners
             document.addEventListener('click', function(e) {
                 if (e.target.classList.contains('edit-btn')) {
                     const imgSrc = e.target.getAttribute('data-img');
@@ -1064,304 +1227,930 @@
                     openEditor(imgSrc);
                 }
             });
+            closeEditorBtn.addEventListener('click', closeEditor);
+            downloadEditedBtn.addEventListener('click', downloadEditedImage);
+            cropBtn.addEventListener('click', toggleCrop);
+            addTextBtn.addEventListener('click', toggleTextMode);
+            saveTextBtn.addEventListener('click', applyTextToCanvas);
+            cancelTextBtn.addEventListener('click', resetText);
 
-            function openEditor(imgSrc) {
-                const img = new Image();
-                img.crossOrigin = 'Anonymous';
-                img.onload = function() {
-                    editorCanvas.width = this.naturalWidth;
-                    editorCanvas.height = this.naturalHeight;
-                    ctx.drawImage(this, 0, 0);
-                    editorModal.style.display = 'flex';
-                };
-                img.src = imgSrc;
+            // Text input live preview
+            textInput.addEventListener('input', updateTextPreview);
+            fontSizeSelect.addEventListener('change', updateTextPreview);
+            fontFamilySelect.addEventListener('change', updateTextPreview);
+            textColorInput.addEventListener('input', updateTextPreview);
+            textAlignSelect.addEventListener('change', updateTextPreview);
+
+            // --- Core Functions ---
+
+            function showLegalContent(targetId) {
+                document.querySelector('.input-container').style.display = 'none';
+                loadingElement.style.display = 'none';
+                resultsElement.style.display = 'none';
+                errorElement.style.display = 'none';
+                livePreview.style.display = 'none';
+                document.querySelector('.how-to-use').style.display = 'none';
+                document.querySelector('.popular-videos').style.display = 'none';
+                document.querySelector('.ad-container').style.display = 'none';
+                batchContainer.style.display = 'none';
+                document.querySelector('footer').style.display = 'none';
+                document.querySelector('header').style.display = 'none';
+
+                legalContents.forEach(content => {
+                    content.style.display = content.id === targetId ? 'block' : 'none';
+                });
+                const targetElement = document.getElementById(targetId);
+                if(targetElement) targetElement.focus();
             }
 
-            closeEditorBtn.addEventListener('click', () => {
-                editorModal.style.display = 'none';
-            });
+            function showMainContent() {
+                legalContents.forEach(content => content.style.display = 'none');
 
-            downloadEditedBtn.addEventListener('click', () => {
-                const dataUrl = editorCanvas.toDataURL('image/jpeg');
-                const link = document.createElement('a');
-                link.href = dataUrl;
-                link.download = 'edited-thumbnail.jpg';
-                link.click();
-            });
+                document.querySelector('.input-container').style.display = 'block';
+                const isBatchMode = batchContainer.style.display === 'block';
+                 document.getElementById('youtube-url').style.display = isBatchMode ? 'none' : 'block';
+                 document.getElementById('submit-btn').style.display = isBatchMode ? 'none' : 'block';
+                 batchContainer.style.display = isBatchMode ? 'block' : 'none';
+                 resultsElement.style.display = resultsElement.hasChildNodes() ? 'grid' : 'none';
+                 livePreview.style.display = previewImg.src ? 'block' : 'none';
 
-            addTextBtn.addEventListener('click', () => {
-                const text = prompt('Enter text to add to thumbnail:', 'Your Text Here');
-                if (text) {
-                    ctx.font = '30px Arial';
-                    ctx.fillStyle = 'white';
-                    ctx.strokeStyle = 'black';
-                    ctx.lineWidth = 2;
-                    ctx.strokeText(text, 20, 50);
-                    ctx.fillText(text, 20, 50);
-                }
-            });
+                document.querySelector('.how-to-use').style.display = 'block';
+                document.querySelector('.popular-videos').style.display = 'block';
+                document.querySelector('.ad-container').style.display = 'block';
+                document.querySelector('footer').style.display = 'block';
+                 document.querySelector('header').style.display = 'block';
+            }
 
-            // Basic crop functionality
-            let isCropping = false;
-            let startX, startY;
-            
-            cropBtn.addEventListener('click', () => {
-                isCropping = !isCropping;
-                cropBtn.style.backgroundColor = isCropping ? '#ff9800' : '';
-                if (isCropping) {
-                    editorCanvas.style.cursor = 'crosshair';
-                } else {
-                    editorCanvas.style.cursor = 'default';
-                }
-            });
+            function updateLivePreview(videoId) {
+                 if (!videoId) {
+                    livePreview.style.display = 'none';
+                    return;
+                 }
+                 previewImg.src = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+                 livePreview.style.display = 'block';
+            }
 
-            editorCanvas.addEventListener('mousedown', (e) => {
-                if (isCropping) {
-                    const rect = editorCanvas.getBoundingClientRect();
-                    startX = e.clientX - rect.left;
-                    startY = e.clientY - rect.top;
-                }
-            });
-
-            editorCanvas.addEventListener('mouseup', (e) => {
-                if (isCropping && startX) {
-                    const rect = editorCanvas.getBoundingClientRect();
-                    const endX = e.clientX - rect.left;
-                    const endY = e.clientY - rect.top;
-                    
-                    const width = endX - startX;
-                    const height = endY - startY;
-                    
-                    if (width > 10 && height > 10) { // Minimum size
-                        const imageData = ctx.getImageData(startX, startY, width, height);
-                        
-                        // Resize canvas to cropped dimensions
-                        editorCanvas.width = width;
-                        editorCanvas.height = height;
-                        ctx.putImageData(imageData, 0, 0);
-                    }
-                    
-                    isCropping = false;
-                    cropBtn.style.backgroundColor = '';
-                    editorCanvas.style.cursor = 'default';
-                }
-            });
-
-            // Main Thumbnail Fetching Function
-            async function getThumbnails() {
-                const urlInput = youtubeUrlInput.value.trim();
-                
-                // Clear previous
-                errorElement.style.display = 'none';
-                if (batchContainer.style.display !== 'block') {
-                    resultsElement.innerHTML = '';
-                }
-                loadingElement.style.display = 'block';
-                
-                const videoId = extractVideoId(urlInput);
-                if (!videoId) {
-                    showError('Please enter a valid YouTube URL');
+            async function processBatch() {
+                const urls = batchUrls.value.split('\n').map(url => url.trim()).filter(url => url);
+                if (urls.length === 0) {
+                    showError('Please enter at least one valid YouTube URL in the batch input.');
                     return;
                 }
-                
-                try {
-                    // Multiple URL patterns for thumbnails
-                    const thumbnails = [
-                        {
-                            name:' 4k Ultra HD',
-                            size: '3840x2160',
-                            urls: [
-                                `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
-                                `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-                                `https://i.ytimg.com/vi_webp/${videoId}/maxresdefault.webp`
-                            ]
-                        },
-                        {
-                            name: 'Full HD',
-                            size: '1920x1080',
-                            urls: [
-                                `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`,
-                                `https://img.youtube.com/vi/${videoId}/sddefault.jpg`,
-                                `https://i.ytimg.com/vi_webp/${videoId}/sddefault.webp`
-                            ]
-                        },
-                        { name: 'HD', size: '1280×720', url: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` },
-                        { name: 'Standard', size: '640x480', url: `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` },
-                        { name: 'Default', size: '320x180', url: `https://img.youtube.com/vi/${videoId}/default.jpg` }
-                    ];
 
-                    async function checkImage(url) {
-                        return new Promise(resolve => {
-                            const img = new Image();
-                            img.onload = () => {
-                                resolve({
-                                    exists: true,
-                                    width: img.naturalWidth,
-                                    height: img.naturalHeight,
-                                    url: url
-                                });
-                            };
-                            img.onerror = () => resolve({ exists: false });
-                            img.src = url;
-                        });
-                    }
+                resultsElement.innerHTML = '';
+                errorElement.style.display = 'none';
+                loadingElement.style.display = 'block';
+                batchProgress.style.display = 'block';
+                progressFill.style.width = '0%';
+                progressText.textContent = `Processing 0 of ${urls.length}`;
+                submitBtn.disabled = true;
+                processBatchBtn.disabled = true;
 
-                    // Process thumbnails
-                    const availableThumbs = [];
-                    for (const thumb of thumbnails) {
-                        if (thumb.urls) {
-                            // For high-res thumbnails, try all URLs
-                            let bestResult = null;
-                            for (const url of thumb.urls) {
-                                const result = await checkImage(url);
-                                if (result.exists && (!bestResult || result.width > bestResult.width)) {
-                                    bestResult = result;
-                                }
-                            }
-                            if (bestResult && bestResult.width >= 1280) { // Minimum HD width
-                                availableThumbs.push({
-                                    name: thumb.name,
-                                    size: `${bestResult.width}x${bestResult.height}`,
-                                    url: bestResult.url
-                                });
-                            }
-                        } else {
-                            // For standard thumbnails, use single URL
-                            const result = await checkImage(thumb.url);
-                            if (result.exists) {
-                                availableThumbs.push({
-                                    name: thumb.name,
-                                    size: thumb.size,
-                                    url: thumb.url
-                                });
-                            }
+                let processedCount = 0;
+                const totalUrls = urls.length;
+
+                for (const url of urls) {
+                    const videoId = extractVideoId(url);
+                    if (videoId) {
+                        try {
+                            await fetchAndDisplayThumbnails(videoId, true);
+                        } catch (error) {
+                            console.error(`Error processing URL: ${url}`, error);
+                             const errorItem = document.createElement('div');
+                             errorItem.textContent = `Error loading thumbnails for ${url}.`;
+                             errorItem.style.color = '#d32f2f';
+                             errorItem.style.gridColumn = 'span 2';
+                             resultsElement.appendChild(errorItem);
                         }
+                    } else {
+                         const invalidItem = document.createElement('div');
+                         invalidItem.textContent = `Invalid URL skipped: ${url}`;
+                         invalidItem.style.color = '#757575';
+                          invalidItem.style.gridColumn = 'span 2';
+                         resultsElement.appendChild(invalidItem);
                     }
-                    
-                    if (availableThumbs.length === 0) {
-                        showError('No thumbnails found. Video may be private or unavailable.');
-                        return;
-                    }
-                    
-                    // Display thumbnails
-                    availableThumbs.forEach(thumb => {
-                        const item = document.createElement('div');
-                        item.className = 'thumbnail-item';
-                        
-                        item.innerHTML = `
-                            <div class="thumbnail-img-container">
-                                <img class="thumbnail-img" src="${thumb.url}" alt="${thumb.name} YouTube thumbnail" loading="lazy">
-                            </div>
-                            <div class="thumbnail-info">
-                                <div class="thumbnail-title">${thumb.name} (${thumb.size})</div>
-                                <div class="btn-group">
-                                    <button class="download-btn" data-url="${thumb.url}" data-name="yt_${thumb.name.toLowerCase()}_${videoId}.jpg">Download</button>
-                                    <button class="copy-btn" data-url="${thumb.url}">Copy URL</button>
-                                    <button class="edit-btn" data-img="${thumb.url}">Edit Thumbnail</button>
-                                </div>
-                            </div>
-                        `;
-                        resultsElement.appendChild(item);
-                    });
 
-                    // Add download functionality
-                    document.querySelectorAll('.download-btn').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const url = this.getAttribute('data-url');
-                            const filename = this.getAttribute('data-name');
-                            downloadImage(url, filename);
-                        });
-                    });
-                    
-                    // Add copy functionality with fallback
-                    document.querySelectorAll('.copy-btn').forEach(btn => {
-                        btn.addEventListener('click', async function() {
-                            const url = this.getAttribute('data-url');
-                            try {
-                                // Try modern clipboard API first
-                                await navigator.clipboard.writeText(url);
-                                showCopiedFeedback(this);
-                            } catch (err) {
-                                // Fallback for older browsers
-                                try {
-                                    const textArea = document.createElement('textarea');
-                                    textArea.value = url;
-                                    textArea.style.position = 'fixed';
-                                    document.body.appendChild(textArea);
-                                    textArea.select();
-                                    const successful = document.execCommand('copy');
-                                    document.body.removeChild(textArea);
-                                    
-                                    if (successful) {
-                                        showCopiedFeedback(this);
-                                    } else {
-                                        throw new Error('Copy failed');
-                                    }
-                                } catch (err) {
-                                    alert('Failed to copy URL. Please copy it manually.');
-                                }
-                            }
-                        });
-                    });
-                    
-                } catch (error) {
-                    showError('Error loading video information. Please try again.');
-                    console.error(error);
-                } finally {
-                    loadingElement.style.display = 'none';
+                    processedCount++;
+                    const progress = Math.round((processedCount / totalUrls) * 100);
+                    progressFill.style.width = `${progress}%`;
+                    progressText.textContent = `Processed ${processedCount} of ${totalUrls}`;
                 }
+
+                loadingElement.style.display = 'none';
+                submitBtn.disabled = false;
+                 processBatchBtn.disabled = false;
             }
-            
+
+             async function getThumbnails() {
+                 const urlInput = youtubeUrlInput.value.trim();
+                 const videoId = extractVideoId(urlInput);
+
+                 if (!videoId) {
+                     showError('Please enter a valid YouTube URL (e.g., youtube.com/watch?v=...)');
+                     return;
+                 }
+
+                 resultsElement.innerHTML = '';
+                 errorElement.style.display = 'none';
+                 loadingElement.style.display = 'block';
+                 submitBtn.disabled = true;
+                 processBatchBtn.disabled = true;
+
+                 try {
+                    await fetchAndDisplayThumbnails(videoId, false);
+                 } catch(error) {
+                     console.error("Error fetching thumbnails:", error);
+                     showError('Could not load thumbnails. The video might be private, deleted, or the URL is incorrect.');
+                 } finally {
+                    loadingElement.style.display = 'none';
+                    submitBtn.disabled = false;
+                    processBatchBtn.disabled = false;
+                 }
+             }
+
+            async function fetchAndDisplayThumbnails(videoId, isBatch = false) {
+                const potentialThumbnails = [
+                    { url: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`, name: 'Maximum Resolution (HD/4K)' },
+                    { url: `https://img.youtube.com/vi/${videoId}/maxresdefault.webp`, name: 'Maximum Resolution (WebP)' },
+                    { url: `https://img.youtube.com/vi/${videoId}/sddefault.jpg`, name: 'Standard Definition' },
+                    { url: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`, name: 'High Quality' },
+                    { url: `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`, name: 'Medium Quality' },
+                    { url: `https://img.youtube.com/vi/${videoId}/default.jpg`, name: 'Default Quality' },
+                    { url: `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`, name: 'Max Res (Alternative)' },
+                    { url: `https://i.ytimg.com/vi_webp/${videoId}/maxresdefault.webp`, name: 'Max Res WebP (Alternative)' },
+                    { url: `https://img.youtube.com/vi/${videoId}/0.jpg`, name: 'Player Background' },
+                    { url: `https://img.youtube.com/vi/${videoId}/1.jpg`, name: 'Start Frame' },
+                    { url: `https://img.youtube.com/vi/${videoId}/2.jpg`, name: 'Middle Frame' },
+                    { url: `https://img.youtube.com/vi/${videoId}/3.jpg`, name: 'End Frame' }
+                ];
+
+                 const checkedUrls = new Set();
+                 const availableThumbs = [];
+
+                 const checks = potentialThumbnails.map(async (thumbInfo) => {
+                    const urlToCheck = thumbInfo.url;
+
+                    if (checkedUrls.has(urlToCheck)) {
+                        return null;
+                    }
+                    checkedUrls.add(urlToCheck);
+
+                     try {
+                         const result = await checkImageExists(urlToCheck);
+                         if (result.exists) {
+                             return {
+                                 name: thumbInfo.name,
+                                 size: `${result.width}x${result.height}`,
+                                 url: urlToCheck,
+                                 resolution: result.width * result.height
+                             };
+                         }
+                     } catch (error) {
+                         return null;
+                     }
+                     return null;
+                 });
+
+                 const results = await Promise.all(checks);
+
+                 results.forEach(thumb => {
+                     if (thumb) {
+                         availableThumbs.push(thumb);
+                     }
+                 });
+
+                if (availableThumbs.length === 0) {
+                     if (!isBatch) {
+                        throw new Error('No valid thumbnails found.');
+                     }
+                    return;
+                }
+
+                availableThumbs.sort((a, b) => {
+                    if (b.resolution !== a.resolution) {
+                        return b.resolution - a.resolution;
+                    }
+                    return a.name.localeCompare(b.name);
+                });
+
+                if (isBatch) {
+                     const batchHeader = document.createElement('div');
+                     batchHeader.style.gridColumn = '1 / -1';
+                     batchHeader.style.fontWeight = 'bold';
+                     batchHeader.style.marginTop = '10px';
+                     batchHeader.style.borderTop = `1px solid var(--border)`;
+                     batchHeader.style.paddingTop = '10px';
+                     batchHeader.textContent = `Thumbnails for Video ID: ${videoId}`;
+                     resultsElement.appendChild(batchHeader);
+                }
+
+                availableThumbs.forEach(thumb => {
+                    const item = document.createElement('div');
+                    item.className = 'thumbnail-item';
+
+                    item.innerHTML = `
+                        <div class="thumbnail-img-container">
+                            <img class="thumbnail-img" src="${thumb.url}" alt="${thumb.name} YouTube thumbnail (${thumb.size})" loading="lazy">
+                        </div>
+                        <div class="thumbnail-info">
+                            <div class="thumbnail-title">${thumb.name} (${thumb.size})</div>
+                            <div class="btn-group">
+                                <button class="download-btn" data-url="${thumb.url}" data-name="yt_${videoId}_${thumb.name.toLowerCase().replace(/[^a-z0-9]+/g, '_')}.jpg">📥 Download</button>
+                                <button class="copy-btn" data-url="${thumb.url}">📋 Copy URL</button>
+                                <button class="edit-btn" data-img="${thumb.url}">✏️ Edit Thumbnail</button>
+                            </div>
+                        </div>
+                    `;
+                    resultsElement.appendChild(item);
+                });
+
+                attachButtonListeners();
+                resultsElement.style.display = 'grid';
+            }
+
+             async function checkImageExists(url) {
+                 return new Promise((resolve) => {
+                     const img = new Image();
+                     img.onload = function() {
+                         if (this.naturalWidth <= 121 && this.naturalHeight <= 91) {
+                             resolve({ exists: false });
+                         } else {
+                             resolve({
+                                 exists: true,
+                                 width: this.naturalWidth,
+                                 height: this.naturalHeight
+                             });
+                         }
+                     };
+                     img.onerror = () => resolve({ exists: false });
+                     img.src = url + (url.includes('?') ? '&' : '?') + '_t=' + new Date().getTime();
+                 });
+             }
+
+            function attachButtonListeners() {
+                document.querySelectorAll('.download-btn').forEach(btn => {
+                    btn.replaceWith(btn.cloneNode(true));
+                });
+                 document.querySelectorAll('.copy-btn').forEach(btn => {
+                    btn.replaceWith(btn.cloneNode(true));
+                });
+                 document.querySelectorAll('.edit-btn').forEach(btn => {
+                     btn.replaceWith(btn.cloneNode(true));
+                 });
+
+                document.querySelectorAll('.download-btn').forEach(btn => {
+                    btn.addEventListener('click', handleDownloadClick);
+                 });
+                 document.querySelectorAll('.copy-btn').forEach(btn => {
+                    btn.addEventListener('click', handleCopyClick);
+                 });
+                 document.querySelectorAll('.edit-btn').forEach(btn => {
+                      btn.addEventListener('click', handleEditClick);
+                 });
+            }
+
+             function handleDownloadClick(event) {
+                 const btn = event.target;
+                 const url = btn.getAttribute('data-url');
+                 const filename = btn.getAttribute('data-name');
+                 downloadImage(url, filename);
+             }
+
+             async function handleCopyClick(event) {
+                 const btn = event.target;
+                 const url = btn.getAttribute('data-url');
+                 try {
+                     await navigator.clipboard.writeText(url);
+                     showCopiedFeedback(btn);
+                 } catch (err) {
+                     console.error('Clipboard API failed:', err);
+                     alert('Copy failed. Please copy manually:\n' + url);
+                 }
+             }
+              function handleEditClick(event) {
+                    const btn = event.target;
+                    const imgSrc = btn.getAttribute('data-img');
+                    currentEditingImg = imgSrc;
+                    openEditor(imgSrc);
+              }
+
             function showCopiedFeedback(button) {
                 const originalText = button.textContent;
                 button.textContent = '✅ Copied!';
+                button.disabled = true;
                 button.style.backgroundColor = '#2d8e47';
                 setTimeout(() => {
                     button.textContent = originalText;
                     button.style.backgroundColor = '';
-                }, 2000);
+                     button.disabled = false;
+                }, 1500);
             }
-            
+
             function extractVideoId(url) {
                 if (!url) return null;
-                
-                const patterns = [
-                    /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i,
-                    /youtube\.com\/shorts\/([^"&?\/\s]{11})/i,
-                    /youtube\.com\/live\/([^"&?\/\s]{11})/i
-                ];
-                
-                for (const pattern of patterns) {
-                    const match = url.match(pattern);
-                    if (match?.[1]) return match[1];
-                }
+                url = url.trim();
+                 const patterns = [
+                     /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/|live\/|playlist\?list=.*&v=|attribution_link.*v(?:=|%3D))([^&?#\s]{11})/,
+                     /(?:https?:\/\/)?(?:www\.)?youtu\.be\/([^?#\s]{11})/,
+                     /(?:https?:\/\/)?(?:www\.)?youtube.com\/oembed\?url=.*v%3D([^%]{11})/,
+                     /(?:https?:\/\/)?(?:www\.)?youtube.com\/attribution_link\?.*v%3D([^%]{11})/,
+                     /http:\/\/googleusercontent\.com\/youtube\.com\/\d+\/(?:vi\/)?([^\/]{11})/
+                 ];
+
+                 for (const pattern of patterns) {
+                     const match = url.match(pattern);
+                     if (match && match[1] && match[1].length === 11) {
+                          if (!match[1].includes('=') && !match[1].includes('&')) {
+                                return match[1];
+                          }
+                     }
+                 }
+                 if (/^[a-zA-Z0-9_-]{11}$/.test(url)) {
+                     return url;
+                 }
+
                 return null;
             }
-            
+
             function showError(message) {
                 errorElement.textContent = message;
                 errorElement.style.display = 'block';
                 loadingElement.style.display = 'none';
+                submitBtn.disabled = false;
+                processBatchBtn.disabled = false;
             }
-            
-            async function downloadImage(url, filename) {
+
+            async function downloadImage(imageUrl, filename) {
                 try {
-                    const response = await fetch(url);
+                    const response = await fetch(imageUrl, {
+                        mode: 'cors'
+                    });
+
+                    if (!response.ok) {
+                         console.warn("CORS fetch failed, trying no-cors");
+                         const noCorsResponse = await fetch(imageUrl, { mode: 'no-cors' });
+                          if (noCorsResponse.ok || noCorsResponse.type === 'opaque') {
+                              triggerDownloadLink(imageUrl, filename);
+                              return;
+                          }
+                         throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
                     const blob = await response.blob();
                     const blobUrl = window.URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = blobUrl;
-                    link.download = filename;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    window.URL.revokeObjectURL(blobUrl);
+                    triggerDownloadLink(blobUrl, filename);
+                    setTimeout(() => window.URL.revokeObjectURL(blobUrl), 1000);
+
                 } catch (error) {
                     console.error('Download failed:', error);
-                    alert('Failed to download image. Please try again.');
+                    triggerDownloadLink(imageUrl, filename);
                 }
             }
+
+             function triggerDownloadLink(href, filename) {
+                 const link = document.createElement('a');
+                 link.href = href;
+                 link.download = filename;
+                 if (href.startsWith('blob:')) {
+                    link.target = '_blank';
+                 }
+                 document.body.appendChild(link);
+                 link.click();
+                 document.body.removeChild(link);
+             }
+
+             // --- Editor Functions ---
+
+            function openEditor(imgSrc) {
+                 resetEditor();
+                 const img = new Image();
+                 img.crossOrigin = 'Anonymous';
+                 img.onload = () => {
+                     editorCanvas.width = img.naturalWidth;
+                     editorCanvas.height = img.naturalHeight;
+                     ctx.drawImage(img, 0, 0);
+                     editorModal.style.display = 'flex';
+                      editorModal.focus();
+                 };
+                 img.onerror = () => {
+                     alert('Could not load image for editing. CORS policy might be preventing access.');
+                     editorModal.style.display = 'none';
+                 };
+                  img.src = imgSrc + (imgSrc.includes('?') ? '&' : '?') + '_edit_t=' + new Date().getTime();
+            }
+
+            function closeEditor() {
+                 editorModal.style.display = 'none';
+                 resetEditor();
+            }
+
+            function resetEditor() {
+                 isCropping = false;
+                 isAddingText = false;
+                 isMovingText = false;
+                 draggingCrop = false;
+                 resizingCrop = false;
+                 textToolbar.classList.remove('active');
+                 addTextBtn.textContent = '✏️ Add Text';
+                 addTextBtn.style.backgroundColor = '';
+                 cropBtn.textContent = '✂️ Crop';
+                 cropBtn.style.backgroundColor = '';
+                 textInput.value = '';
+                 textPreview.style.display = 'none';
+                 cropInfo.style.display = 'none';
+                 removeCropControls();
+                 removeEditorEventListeners();
+                 activeTextElement = null;
+            }
+
+            function redrawCanvas() {
+                 if (!currentEditingImg) return;
+                  ctx.clearRect(0, 0, editorCanvas.width, editorCanvas.height);
+                 const img = new Image();
+                 img.crossOrigin = 'Anonymous';
+                 img.onload = () => {
+                     if (editorCanvas.width !== img.naturalWidth || editorCanvas.height !== img.naturalHeight) {
+                         editorCanvas.width = img.naturalWidth;
+                         editorCanvas.height = img.naturalHeight;
+                     }
+                     ctx.drawImage(img, 0, 0);
+                     
+                     // Redraw all text elements
+                     textElements.forEach(text => {
+                         drawTextElement(text);
+                     });
+                     
+                     if (isCropping) {
+                         drawCropOverlay();
+                     }
+                 };
+                 img.src = currentEditingImg + (currentEditingImg.includes('?') ? '&' : '?') + '_redraw_t=' + new Date().getTime();
+             }
+
+            function downloadEditedImage() {
+                try {
+                    const dataUrl = editorCanvas.toDataURL('image/jpeg', 0.9);
+                    const link = document.createElement('a');
+                    link.href = dataUrl;
+                    link.download = `edited_thumbnail_${Date.now()}.jpg`;
+                    link.click();
+                } catch (e) {
+                     console.error("Error generating data URL:", e);
+                     alert("Could not generate image for download. The image might be tainted by CORS.");
+                }
+            }
+
+             // --- Text Editing Functions ---
+
+             function toggleTextMode() {
+                if (isAddingText) {
+                     resetText();
+                 } else {
+                    startText();
+                 }
+             }
+
+             function startText() {
+                 resetCrop();
+                 isAddingText = true;
+                 textToolbar.classList.add('active');
+                 addTextBtn.textContent = '✖ Cancel Text';
+                 addTextBtn.style.backgroundColor = 'var(--danger)';
+                 textInput.focus();
+                 
+                 // Set default position at center
+                 currentTextPosition = {
+                     x: editorCanvas.width / 2,
+                     y: editorCanvas.height / 2
+                 };
+                 
+                 updateTextPreview();
+             }
+
+             function updateTextPreview() {
+                 if (!isAddingText) return;
+                 
+                 const text = textInput.value.trim();
+                 if (!text) {
+                     textPreview.style.display = 'none';
+                     return;
+                 }
+                 
+                 const fontSize = parseInt(fontSizeSelect.value);
+                 const fontFamily = fontFamilySelect.value;
+                 const textAlign = textAlignSelect.value;
+                 const textColor = textColorInput.value;
+                 
+                 textPreview.textContent = text;
+                 textPreview.style.fontFamily = fontFamily;
+                 textPreview.style.fontSize = `${fontSize}px`;
+                 textPreview.style.color = textColor;
+                 textPreview.style.textAlign = textAlign;
+                 textPreview.style.display = 'block';
+                 
+                 // Position the preview at the current text position
+                 textPreview.style.left = `${currentTextPosition.x}px`;
+                 textPreview.style.top = `${currentTextPosition.y}px`;
+                 textPreview.style.transform = 'translate(-50%, -50%)';
+             }
+
+             function applyTextToCanvas() {
+                 const text = textInput.value.trim();
+                 if (!text) return;
+
+                 const fontSize = parseInt(fontSizeSelect.value);
+                 const fontFamily = fontFamilySelect.value;
+                 const textAlign = textAlignSelect.value;
+                 const textColor = textColorInput.value;
+                 
+                 const textElement = {
+                     text,
+                     x: currentTextPosition.x,
+                     y: currentTextPosition.y,
+                     fontSize,
+                     fontFamily,
+                     textAlign,
+                     color: textColor
+                 };
+                 
+                 textElements.push(textElement);
+                 drawTextElement(textElement);
+                 
+                 resetText();
+             }
+             
+             function drawTextElement(textElement) {
+                 ctx.font = `${textElement.fontSize}px ${textElement.fontFamily}`;
+                 ctx.fillStyle = textElement.color;
+                 ctx.textAlign = textElement.textAlign;
+                 ctx.textBaseline = 'middle';
+
+                 // Text shadow for better visibility
+                 ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+                 ctx.shadowBlur = 4;
+                 ctx.shadowOffsetX = 2;
+                 ctx.shadowOffsetY = 2;
+
+                 let x = textElement.x;
+                 if (textElement.textAlign === 'left') x = textElement.x;
+                 else if (textElement.textAlign === 'center') x = textElement.x;
+                 else x = textElement.x;
+
+                 ctx.fillText(textElement.text, x, textElement.y);
+
+                 // Reset shadow
+                 ctx.shadowColor = 'transparent';
+                 ctx.shadowBlur = 0;
+                 ctx.shadowOffsetX = 0;
+                 ctx.shadowOffsetY = 0;
+             }
+
+             function resetText() {
+                 isAddingText = false;
+                 isMovingText = false;
+                 textToolbar.classList.remove('active');
+                 addTextBtn.textContent = '✏️ Add Text';
+                 addTextBtn.style.backgroundColor = '';
+                 textInput.value = '';
+                 textPreview.style.display = 'none';
+                 activeTextElement = null;
+             }
+
+             // --- Crop Editing Functions ---
+
+             function toggleCrop() {
+                 if (isCropping) {
+                     applyCrop();
+                 } else {
+                     startCrop();
+                 }
+             }
+
+             function startCrop() {
+                 resetText();
+                 isCropping = true;
+                 cropBtn.textContent = '✔ Apply Crop';
+                 cropBtn.style.backgroundColor = 'var(--warning)';
+                 cropInfo.style.display = 'block';
+
+                 // Initialize crop rectangle (20px margin from edges)
+                 const margin = 20;
+                 cropRect = {
+                     x: margin,
+                     y: margin,
+                     width: editorCanvas.width - margin * 2,
+                     height: editorCanvas.height - margin * 2
+                 };
+
+                 createCropControls();
+                 drawCropOverlay();
+                 addEditorEventListeners();
+                 updateCropInfo();
+             }
+
+             function applyCrop() {
+                  if (cropRect.width < 10 || cropRect.height < 10) {
+                      alert('Crop area is too small.');
+                      return;
+                  }
+                 try {
+                     // Create a temporary canvas to hold the cropped image
+                     const tempCanvas = document.createElement('canvas');
+                     tempCanvas.width = cropRect.width;
+                     tempCanvas.height = cropRect.height;
+                     const tempCtx = tempCanvas.getContext('2d');
+                     
+                     // Draw the cropped portion to the temp canvas
+                     tempCtx.drawImage(
+                         editorCanvas,
+                         cropRect.x, cropRect.y, cropRect.width, cropRect.height,
+                         0, 0, cropRect.width, cropRect.height
+                     );
+
+                     // Resize main canvas and draw the cropped image back
+                     editorCanvas.width = cropRect.width;
+                     editorCanvas.height = cropRect.height;
+                     ctx.drawImage(tempCanvas, 0, 0);
+                     
+                     // Adjust text element positions relative to the crop
+                     textElements = textElements.map(text => ({
+                         ...text,
+                         x: text.x - cropRect.x,
+                         y: text.y - cropRect.y
+                     })).filter(text => 
+                         text.x >= 0 && text.x <= cropRect.width &&
+                         text.y >= 0 && text.y <= cropRect.height
+                     );
+
+                 } catch (e) {
+                     console.error("Error applying crop:", e);
+                     alert("Could not apply crop. Image might be CORS restricted.");
+                 } finally {
+                      resetCrop();
+                 }
+             }
+
+             function resetCrop() {
+                 isCropping = false;
+                 draggingCrop = false;
+                 resizingCrop = false;
+                 cropBtn.textContent = '✂️ Crop';
+                 cropBtn.style.backgroundColor = '';
+                 cropInfo.style.display = 'none';
+                 removeCropControls();
+                 removeEditorEventListeners();
+             }
+
+             function createCropControls() {
+                 removeCropControls();
+
+                 const positions = ['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se'];
+
+                 positions.forEach(pos => {
+                     const control = document.createElement('div');
+                     control.className = `crop-control ${pos}`;
+                     control.dataset.position = pos;
+                     editorCanvasContainer.appendChild(control);
+                     cropControls.push(control);
+                 });
+                 updateControlPositions();
+             }
+
+             function updateControlPositions() {
+                 if (!isCropping || cropControls.length === 0) return;
+
+                 const handleSize = 12;
+                 const halfHandle = handleSize / 2;
+
+                 cropControls.forEach(ctrl => {
+                     const pos = ctrl.dataset.position;
+                     let left = 0, top = 0;
+
+                     if (pos.includes('n')) top = cropRect.y - halfHandle;
+                     if (pos.includes('s')) top = cropRect.y + cropRect.height - halfHandle;
+                     if (pos.includes('w')) left = cropRect.x - halfHandle;
+                     if (pos.includes('e')) left = cropRect.x + cropRect.width - halfHandle;
+                     
+                     // Center side handles
+                     if (pos === 'n' || pos === 's') left = cropRect.x + cropRect.width / 2 - (pos.includes('n') || pos.includes('s') ? 12 : 0);
+                     if (pos === 'e' || pos === 'w') top = cropRect.y + cropRect.height / 2 - (pos.includes('e') || pos.includes('w') ? 12 : 0);
+
+                     ctrl.style.left = `${left}px`;
+                     ctrl.style.top = `${top}px`;
+                     ctrl.style.display = 'block';
+                 });
+             }
+
+             function removeCropControls() {
+                 cropControls.forEach(ctrl => ctrl.remove());
+                 cropControls = [];
+             }
+
+             function drawCropOverlay() {
+                 if (!isCropping) return;
+                 
+                 // Redraw base image and text
+                 redrawCanvas();
+                 
+                 // Draw semi-transparent overlay outside the crop area
+                 ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+                 
+                 // Top rectangle
+                 ctx.fillRect(0, 0, editorCanvas.width, cropRect.y);
+                 // Bottom rectangle
+                 ctx.fillRect(0, cropRect.y + cropRect.height, editorCanvas.width, editorCanvas.height - (cropRect.y + cropRect.height));
+                 // Left rectangle
+                 ctx.fillRect(0, cropRect.y, cropRect.x, cropRect.height);
+                 // Right rectangle
+                 ctx.fillRect(cropRect.x + cropRect.width, cropRect.y, editorCanvas.width - (cropRect.x + cropRect.width), cropRect.height);
+
+                 // Draw dashed border around the crop area
+                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+                 ctx.lineWidth = 1;
+                 ctx.setLineDash([4, 4]);
+                 ctx.strokeRect(cropRect.x, cropRect.y, cropRect.width, cropRect.height);
+                 ctx.setLineDash([]);
+                 
+                 updateControlPositions();
+                 updateCropInfo();
+             }
+             
+             function updateCropInfo() {
+                 if (!isCropping) return;
+                 cropInfo.textContent = `${Math.round(cropRect.width)}×${Math.round(cropRect.height)}`;
+                 cropInfo.style.left = `${cropRect.x + 10}px`;
+                 cropInfo.style.bottom = `${editorCanvas.height - cropRect.y - cropRect.height + 10}px`;
+             }
+
+             function addEditorEventListeners() {
+                  editorCanvasContainer.addEventListener('mousedown', handleEditorMouseDown);
+                  editorCanvasContainer.addEventListener('touchstart', handleEditorMouseDown, { passive: false });
+                  
+                  editorCanvas.addEventListener('mousedown', handleCanvasMouseDown);
+                  editorCanvas.addEventListener('touchstart', handleCanvasMouseDown, { passive: false });
+
+                  document.addEventListener('mousemove', handleEditorMouseMove);
+                  document.addEventListener('mouseup', handleEditorMouseUp);
+                  document.addEventListener('touchmove', handleEditorMouseMove, { passive: false });
+                  document.addEventListener('touchend', handleEditorMouseUp);
+                  document.addEventListener('touchcancel', handleEditorMouseUp);
+             }
+
+              function removeEditorEventListeners() {
+                  editorCanvasContainer.removeEventListener('mousedown', handleEditorMouseDown);
+                  editorCanvasContainer.removeEventListener('touchstart', handleEditorMouseDown);
+                  
+                  editorCanvas.removeEventListener('mousedown', handleCanvasMouseDown);
+                  editorCanvas.removeEventListener('touchstart', handleCanvasMouseDown);
+
+                  document.removeEventListener('mousemove', handleEditorMouseMove);
+                  document.removeEventListener('mouseup', handleEditorMouseUp);
+                  document.removeEventListener('touchmove', handleEditorMouseMove);
+                  document.removeEventListener('touchend', handleEditorMouseUp);
+                  document.removeEventListener('touchcancel', handleEditorMouseUp);
+              }
+              
+              function handleCanvasMouseDown(e) {
+                  if (isAddingText) {
+                      e.preventDefault();
+                      const coords = getEditorCoords(e);
+                      currentTextPosition = coords;
+                      updateTextPreview();
+                  }
+              }
+
+            function getEditorCoords(event) {
+                const rect = editorCanvas.getBoundingClientRect();
+                 let clientX, clientY;
+
+                 if (event.touches && event.touches.length > 0) {
+                     clientX = event.touches[0].clientX;
+                     clientY = event.touches[0].clientY;
+                 } else if (event.changedTouches && event.changedTouches.length > 0) {
+                     clientX = event.changedTouches[0].clientX;
+                     clientY = event.changedTouches[0].clientY;
+                 }
+                  else {
+                     clientX = event.clientX;
+                     clientY = event.clientY;
+                 }
+
+                 return {
+                     x: Math.max(0, Math.min(clientX - rect.left, editorCanvas.width)),
+                     y: Math.max(0, Math.min(clientY - rect.top, editorCanvas.height))
+                 };
+             }
+
+             function handleEditorMouseDown(e) {
+                 if (!isCropping) return;
+                  e.preventDefault();
+
+                 const coords = getEditorCoords(e);
+                 cropStartX = coords.x;
+                 cropStartY = coords.y;
+
+                 const clickedHandle = e.target.closest('.crop-control');
+                 if (clickedHandle) {
+                     resizingCrop = true;
+                     draggingCrop = false;
+                     resizeHandle = clickedHandle.dataset.position;
+                     document.body.style.cursor = `${resizeHandle}-resize`;
+                 }
+                  else if (
+                     cropStartX >= cropRect.x && cropStartX <= cropRect.x + cropRect.width &&
+                     cropStartY >= cropRect.y && cropStartY <= cropRect.y + cropRect.height
+                 ) {
+                     draggingCrop = true;
+                     resizingCrop = false;
+                      document.body.style.cursor = 'move';
+                 } else {
+                     draggingCrop = false;
+                     resizingCrop = false;
+                 }
+             }
+
+             function handleEditorMouseMove(e) {
+                 if (!isCropping || (!draggingCrop && !resizingCrop)) return;
+                  e.preventDefault();
+
+                 const coords = getEditorCoords(e);
+                 const dx = coords.x - cropStartX;
+                 const dy = coords.y - cropStartY;
+
+                 if (draggingCrop) {
+                     let newX = cropRect.x + dx;
+                     let newY = cropRect.y + dy;
+
+                     newX = Math.max(0, Math.min(newX, editorCanvas.width - cropRect.width));
+                     newY = Math.max(0, Math.min(newY, editorCanvas.height - cropRect.height));
+
+                     cropRect.x = newX;
+                     cropRect.y = newY;
+
+                 } else if (resizingCrop) {
+                      let newX = cropRect.x;
+                      let newY = cropRect.y;
+                      let newWidth = cropRect.width;
+                      let newHeight = cropRect.height;
+
+                      if (resizeHandle.includes('n')) {
+                          const delta = Math.min(dy, cropRect.height - 10);
+                          newY += delta;
+                          newHeight -= delta;
+                      }
+                      if (resizeHandle.includes('s')) {
+                          newHeight = Math.max(10, cropRect.height + dy);
+                      }
+                      if (resizeHandle.includes('w')) {
+                          const delta = Math.min(dx, cropRect.width - 10);
+                          newX += delta;
+                          newWidth -= delta;
+                      }
+                      if (resizeHandle.includes('e')) {
+                          newWidth = Math.max(10, cropRect.width + dx);
+                      }
+
+                      if (newX < 0) { newWidth += newX; newX = 0; }
+                      if (newY < 0) { newHeight += newY; newY = 0; }
+                      if (newX + newWidth > editorCanvas.width) { newWidth = editorCanvas.width - newX; }
+                      if (newY + newHeight > editorCanvas.height) { newHeight = editorCanvas.height - newY; }
+
+                      if (newWidth >= 10) { cropRect.x = newX; cropRect.width = newWidth; }
+                      if (newHeight >= 10) { cropRect.y = newY; cropRect.height = newHeight; }
+                 }
+
+                  cropStartX = coords.x;
+                  cropStartY = coords.y;
+
+                  drawCropOverlay();
+             }
+
+            function handleEditorMouseUp() {
+                 if (!isCropping) return;
+                 draggingCrop = false;
+                 resizingCrop = false;
+                 resizeHandle = null;
+                 document.body.style.cursor = 'default';
+             }
+
+            // --- Initial Setup ---
+            attachButtonListeners();
+
         });
     </script>
+
+     <style>
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+     </style>
+
 </body>
 </html>
